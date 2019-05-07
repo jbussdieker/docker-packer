@@ -1,12 +1,15 @@
 #!groovy
+latest = "1.4.0"
+stable = "1.4.0"
+
 properties([
   parameters([
-    string(defaultValue: '1.4.0', description: 'Packer Version', name: 'PackerVersion')
+    string(defaultValue: '1.4.0', description: 'Version', name: 'Version')
   ])
 ])
 
 node {
-  packerVersion = params.PackerVersion
+  packerVersion = params.Version
   credentialsId = 'docker-hub-credentials'
 
   stage('clone') {
@@ -26,6 +29,10 @@ node {
   stage('publish') {
     docker.withRegistry("", credentialsId) {
       image.push()
+      if (packerVersion == latest)
+        image.push('latest')
+      else if (packerVersion == stable)
+        image.push('stable')
     }
   }
 }

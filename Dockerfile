@@ -1,7 +1,5 @@
 FROM ubuntu
 
-LABEL description="Packer"
-
 RUN apt-get -y update && \
   apt-get -y install curl unzip
 
