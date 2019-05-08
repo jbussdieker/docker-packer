@@ -31,7 +31,7 @@ node {
       image.push()
       if (packerVersion == latest)
         image.push('latest')
-      else if (packerVersion == stable)
+      if (packerVersion == stable)
         image.push('stable')
     }
   }
